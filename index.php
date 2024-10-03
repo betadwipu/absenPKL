@@ -179,8 +179,8 @@ $logo = $row['logo'];
             <!-- Menu Admin -->
             <?php if ($_SESSION["level"] == "Admin" or $_SESSION['level'] == 'admin'): ?>
                 <li><a href="index.php?page=mahasiswa" id="mahasiswa"><em class="fa fa-users">&nbsp;</em> Data Siswa</a></li>
-                <li><a href="index.php?page=pembimbing" id="pembimbing"><em class="fa fa-user">&nbsp;</em> Pembimbing</a></li>
-                <li><a href="index.php?page=dudi" id="dudi"><em class="fa fa-user">&nbsp;</em>Dudi</a></li>
+                <li><a href="index.php?page=pembimbing" id="pembimbing"><em class="fa fa-user">&nbsp;</em> Data Pembimbing</a></li>
+                <li><a href="index.php?page=dudi" id="dudi"><em class="fa fa-user">&nbsp;</em>Data Dudi</a></li>
                 <li><a href="index.php?page=data_absensi" id="data_absensi"><em class="fa fa-calendar">&nbsp;</em> Data Absensi</a></li>
                 <li><a href="index.php?page=data_kegiatan" id="kegiatan"><em class="fa fa-book">&nbsp;</em> Data Kegiatan</a></li>
                 <li><a href="index.php?page=admin" id="admin"><em class="fa fa-user">&nbsp;</em> Administrator</a></li>
@@ -201,7 +201,7 @@ $logo = $row['logo'];
                 <li><a href="index.php?page=mahasiswa" id="mahasiswa"><em class="fa fa-users">&nbsp;</em> Data Siswa</a></li>
                 <li><a href="index.php?page=data_absensi" id="data_absensi"><em class="fa fa-calendar">&nbsp;</em> Data Absensi Siswa</a></li>
                 <li><a href="index.php?page=data_kegiatan" id="kegiatan"><em class="fa fa-book">&nbsp;</em> Data Kegiatan</a></li>
-                <li><a href="index.php?page=profil-pembimbing" id="pembimbing"><em class="fa fa-user">&nbsp;</em> Pembimbing</a></li>
+                <li><a href="index.php?page=profil-pembimbing" id="pembimbing"><em class="fa fa-user">&nbsp;</em> Profil Pembimbing</a></li>
             <?php endif; ?>
             <!-- Menu Pembimbing -->
 
@@ -210,7 +210,7 @@ $logo = $row['logo'];
                 <li><a href="index.php?page=mahasiswa" id="mahasiswa"><em class="fa fa-users">&nbsp;</em> Data Siswa</a></li>
                 <li><a href="index.php?page=data_absensi" id="data_absensi"><em class="fa fa-calendar">&nbsp;</em> Data Absensi Siswa</a></li>
                 <li><a href="index.php?page=data_kegiatan" id="kegiatan"><em class="fa fa-book">&nbsp;</em> Data Kegiatan</a></li>
-                <li><a href="index.php?page=dudi" id="dudi"><em class="fa fa-user">&nbsp;</em>Dudi</a></li>
+                <li><a href="index.php?page=profil-dudi" id="dudi"><em class="fa fa-user">&nbsp;</em> Profil Dudi</a></li>
             <?php endif; ?>
             <!-- Menu Pembimbing -->
 
@@ -265,6 +265,9 @@ $logo = $row['logo'];
                     break;
                 case 'profil-pembimbing':
                     include "apps/pembimbing/profil.php";
+                    break;
+                case 'profil-dudi':
+                    include "apps/dudi/profil.php";
                     break;
                 default:
                     echo "<center><h3>Maaf. Halaman Tidak Di Temukan !</h3></center>";

@@ -3,7 +3,7 @@
         <li><a href="index.php?page=beranda">
                 <em class="fa fa-home"></em>
             </a></li>
-        <li class="active">Profil Pembimbing</li>
+        <li class="active">Profil Dudi</li>
     </ol>
 </div><!--/.row-->
 
@@ -11,7 +11,7 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-            Profil Pembimbing
+            Profil Dudi
             <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
             <div class="panel-body">
 
@@ -21,7 +21,7 @@
                 //Mengambil kode_pengguna dari session
                 $kode_pengguna=$_SESSION["kode_pengguna"];
                 //Query untuk menampilkan data mahasiswa dari tbl_mahasiswa
-                $sql="SELECT * FROM tbl_pembimbing WHERE kode_pembimbing='$kode_pengguna' LIMIT 1";
+                $sql="SELECT * FROM tbl_dudi WHERE kode_dudi='$kode_pengguna' LIMIT 1";
                 //Menyimpan hasil query
                 $hasil=mysqli_query($kon,$sql);
                 //Menyimpan hasil jadi array
@@ -42,7 +42,7 @@
                 <table class="table">
                     <tbody>
                         <tr>
-                            <td>Nama Pembimbing</td>
+                            <td>Nama Dudi</td>
                             <td width="75%">: <?php echo $data['nama'];?></td>
                         </tr>
                         <tr>
@@ -56,7 +56,7 @@
                     </tbody>
                 </table>
                 <div class="form-group">
-                <button kode_pembimbing="<?php echo $data['kode_pembimbing'];?>" class="password btn btn-info btn-circle" ><i class="fa fa-key"></i>Password</button>
+                <button kode_dudi="<?php echo $data['kode_dudi'];?>" class="password btn btn-info btn-circle" ><i class="fa fa-key"></i>Password</button>
                 </div>
             </div>
         </div>
@@ -91,11 +91,11 @@
 <script>
     // Setting password mahasiswa
     $('.password').on('click',function(){
-        var kode_pembimbing = $(this).attr("kode_pembimbing");
+        var kode_dudi = $(this).attr("kode_dudi");
         $.ajax({
-            url: 'apps/pembimbing/ubah_password.php',
+            url: 'apps/dudi/ubah_password.php',
             method: 'post',
-            data: {kode_pembimbing:kode_pembimbing},
+            data: {kode_dudi:kode_dudi},
             success:function(data){
                 $('#tampil_data').html(data);  
                 document.getElementById("judul").innerHTML='Ubah Password';
