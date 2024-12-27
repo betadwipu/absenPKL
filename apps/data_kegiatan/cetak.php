@@ -8,7 +8,7 @@
         <div class="form-group">
 
                 <!-- Input untuk menyimpan id untuk proses query  -->
-                <input type="hidden" name="id_mahasiswa" value="<?php echo $_POST['id_mahasiswa']; ?>">
+                <input type="hidden" name="id_siswa" value="<?php echo $_POST['id_siswa']; ?>">
                 <!-- ----- -->
 
                 <label>Tanggal Awal :</label>

@@ -103,6 +103,7 @@ if ($_SESSION["level"] != 'Pembimbing' && $_SESSION["level"] != 'Admin' && $_SES
                                 <th>Hari</th>
                                 <th>Tanggal</th>
                                 <th>Jam</th>
+                                <th>Foto</th>
                                 <th>Kegiatan</th>
                                 <th>Aksi</th>
                             </tr>
@@ -145,13 +146,14 @@ if ($_SESSION["level"] != 'Pembimbing' && $_SESSION["level"] != 'Admin' && $_SES
                                         ?>
                                     </td>
                                     <td><?php echo $data['waktu']; ?></td>
+                                    <td><img src="<?= $data['foto'] ?>" alt="Poto kegiatan" width="70"></td>
                                     <td><?php echo $data['kegiatan']; ?></td>
                                     <td>
                                         <?php if ($_SESSION["level"] != 'Pembimbing' && $_SESSION["level"] != 'Dudi'): ?>
-                                            <button id_mahasiswa="<?php echo $data['id_mahasiswa']; ?>" id_kegiatan="<?php echo $data['id_kegiatan']; ?>" class="ubah_kegiatan cetak btn btn-warning"><i class="fa fa-edit"></i></button>
+                                            <button id_siswa="<?php echo $data['id_siswa']; ?>" id_kegiatan="<?php echo $data['id_kegiatan']; ?>" class="ubah_kegiatan cetak btn btn-warning"><i class="fa fa-edit"></i></button>
                                             <a href="apps/data_kegiatan/hapus.php?id_kegiatan=<?php echo $data['id_kegiatan']; ?>" class="btn-hapus-kegiatan btn btn-danger btn-circle"><i class="fa fa-trash"></i></a>
                                         <?php endif; ?>
-                                        <button id_mahasiswa="<?php echo $data['id_mahasiswa']; ?>" class="cetak_kegiatan btn btn-primary btn-circle"><i class="fa fa-print"></i></button>
+                                        <button id_siswa="<?php echo $data['id_siswa']; ?>" class="cetak_kegiatan btn btn-primary btn-circle"><i class="fa fa-print"></i></button>
                                     </td>
                                 </tr>
                                 <!-- bagian akhir (penutup) while -->
@@ -207,13 +209,13 @@ if ($_SESSION["level"] != 'Pembimbing' && $_SESSION["level"] != 'Admin' && $_SES
 <script>
     // Mengubah kegiatan dari admin
     $('.ubah_kegiatan').on('click', function() {
-        var id_mahasiswa = $(this).attr("id_mahasiswa");
+        var id_siswa = $(this).attr("id_siswa");
         var id_kegiatan = $(this).attr("id_kegiatan");
         $.ajax({
             url: 'apps/data_kegiatan/edit.php',
             method: 'POST',
             data: {
-                id_mahasiswa: id_mahasiswa,
+                id_siswa: id_siswa,
                 id_kegiatan: id_kegiatan
             },
             success: function(data) {
@@ -227,7 +229,7 @@ if ($_SESSION["level"] != 'Pembimbing' && $_SESSION["level"] != 'Admin' && $_SES
 </script>
 
 <script>
-    // fungsi hapus mahasiswa
+    // fungsi hapus siswa
     $('.btn-hapus-kegiatan').on('click', function() {
         konfirmasi = confirm("Yakin ingin menghapus kegiatan ini?")
         if (konfirmasi) {
@@ -241,12 +243,12 @@ if ($_SESSION["level"] != 'Pembimbing' && $_SESSION["level"] != 'Admin' && $_SES
 <script>
     // cetak absensi
     $('.cetak_kegiatan').on('click', function() {
-        var id_mahasiswa = $(this).attr("id_mahasiswa");
+        var id_siswa = $(this).attr("id_siswa");
         $.ajax({
             url: 'apps/data_kegiatan/cetak.php',
             method: 'POST',
             data: {
-                id_mahasiswa: id_mahasiswa
+                id_siswa: id_siswa
             },
             success: function(data) {
                 $('#tampil_data').html(data);

@@ -30,12 +30,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cek_tabel_admin = mysqli_query($kon, $tabel_admin);
     $admin = mysqli_num_rows($cek_tabel_admin);
 
-    //Query untuk cek pada tbl_user yang dijoinkan dengan table tbl_mahasiswa
-    $tabel_mahasiswa = "SELECT * FROM tbl_user u
-                            INNER JOIN tbl_mahasiswa m ON m.kode_mahasiswa = u.kode_pengguna
+    //Query untuk cek pada tbl_user yang dijoinkan dengan table tbl_siswa
+    $tabel_siswa = "SELECT * FROM tbl_user u
+                            INNER JOIN tbl_siswa m ON m.kode_siswa = u.kode_pengguna
                             WHERE u.username='" . $username . "' AND u.password='" . $password . "' LIMIT 1";
-    $cek_tabel_mahasiswa = mysqli_query($kon, $tabel_mahasiswa);
-    $mahasiswa = mysqli_num_rows($cek_tabel_mahasiswa);
+    $cek_tabel_siswa = mysqli_query($kon, $tabel_siswa);
+    $siswa = mysqli_num_rows($cek_tabel_siswa);
 
     //Query untuk cek tbl_user yang dijoinkan dengan table tbl_pembimbing
     $tabel_pembimbing = "SELECT * FROM tbl_user u
@@ -62,17 +62,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["nip"] = $row["nip"];
         //mengalihkan halaman ke page beranda
         header("Location:index.php?page=beranda");
-    } else if ($mahasiswa > 0) {
-        $row = mysqli_fetch_assoc($cek_tabel_mahasiswa);
+    } else if ($siswa > 0) {
+        $row = mysqli_fetch_assoc($cek_tabel_siswa);
         $_SESSION["id_pengguna"] = $row["id_user"];
         $_SESSION["kode_pengguna"] = $row["kode_pengguna"];
-        $_SESSION["id_mahasiswa"] = $row["id_mahasiswa"];
-        $_SESSION["nama_mahasiswa"] = $row["nama"];
+        $_SESSION["id_siswa"] = $row["id_siswa"];
+        $_SESSION["nama_siswa"] = $row["nama"];
         $_SESSION["username"] = $row["username"];
-        $_SESSION["universitas"] = $row["universitas"];
+        $_SESSION["sekolah"] = $row["sekolah"];
         $_SESSION["level"] = $row["level"];
         $_SESSION["foto"] = $row["foto"];
-        $_SESSION["nim"] = $row["nim"];
+        $_SESSION["nis"] = $row["nis"];
         //mengalihkan halaman ke page beranda
         header("Location:index.php?page=beranda");
     } else if ($pembimbing > 0) {

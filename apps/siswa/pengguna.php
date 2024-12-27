@@ -13,42 +13,50 @@
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mysqli_query($kon,"START TRANSACTION");
 
-            $kode_mahasiswa=input($_POST["kode_mahasiswa"]);
+            $kode_siswa=input($_POST["kode_siswa"]);
             $username=input($_POST["username"]);
-            $level="Mahasiswa";
+            $level="Siswa";
             $password=md5(input($_POST["password"]));
             
             $sql="UPDATE tbl_user SET
             username='$username',
             password='$password',
             level='$level'
-            WHERE kode_pengguna='$kode_mahasiswa'";
+            WHERE kode_pengguna='$kode_siswa'";
             $setting_pengguna=mysqli_query($kon,$sql);
 
             if ($setting_pengguna) {
                 mysqli_query($kon,"COMMIT");
-                header("Location:../../index.php?page=mahasiswa&pengguna=berhasil");
+                header("Location:../../index.php?page=siswa&pengguna=berhasil");
             }
             else {
                 mysqli_query($kon,"ROLLBACK");
-                header("Location:../../index.php?page=mahasiswa&pengguna=gagal");
+                header("Location:../../index.php?page=siswa&pengguna=gagal");
             }
         }  
     }
 ?>
 
-<form action="apps/mahasiswa/pengguna.php" method="post">
+<form action="apps/siswa/pengguna.php" method="post">
 <?php
     include '../../config/database.php';
-    $kode_pengguna=$_POST['kode_mahasiswa'];
-    $query = mysqli_query($kon, "SELECT * FROM tbl_user where kode_pengguna='$kode_pengguna'");
-    $data = mysqli_fetch_array($query);
-    $username=$data['username'];
+
+    $kode_pengguna = isset($_POST['kode_siswa']) ? mysqli_real_escape_string($kon, $_POST['kode_siswa']) : '';
+    $username = '';
+
+    if (!empty($kode_pengguna)) {
+        $query = mysqli_query($kon, "SELECT * FROM tbl_user WHERE kode_pengguna='$kode_pengguna'");
+        if ($query && mysqli_num_rows($query) > 0) {
+            $data = mysqli_fetch_array($query);
+            $username = $data['username'];
+        }
+    }
 ?>
+<form action="apps/siswa/pengguna.php" method="post">
     <div class="row">
         <div class="col-sm-7">
             <div class="form-group">
-                <input name="kode_mahasiswa" type="hidden" id="kode_mahasiswa" class="form-control" value="<?php echo $_POST['kode_mahasiswa'];?>"/>
+                <input name="kode_siswa" type="hidden" id="kode_siswa" class="form-control" value="<?php echo htmlspecialchars($kode_pengguna); ?>"/>
             </div>
         </div>
     </div>
@@ -56,7 +64,7 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <label>Username :</label>
-                <input name="username" type="text" id="username" class="form-control" value="<?php echo $username; ?>" placeholder="Buat Username" required>
+                <input name="username" type="text" id="username" class="form-control" value="<?php echo htmlspecialchars($username); ?>" placeholder="Buat Username" required>
                 <div id="info_username"> </div>
             </div>
         </div>
@@ -73,6 +81,7 @@
         </div>
     </div>
 </form>
+
 
 <script>
     $("#username").bind('keyup', function () {

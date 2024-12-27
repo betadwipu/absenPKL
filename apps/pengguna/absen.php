@@ -1,5 +1,5 @@
 <?php 
-    if ($_SESSION["level"]!='Mahasiswa' and $_SESSION["level"]!='mahasiswa'){
+    if ($_SESSION["level"]!='Siswa' and $_SESSION["level"]!='siswa'){
     echo"<br><div class='alert alert-danger'>Tidak Memiliki Hak Akses</div>";
     exit;
     }
@@ -8,13 +8,13 @@
 <?php
     // Mengambil data dari sessi login
     include 'config/database.php';
-    $id_mahasiswa=$_SESSION["id_mahasiswa"];
-    $sql="select * from tbl_mahasiswa where id_mahasiswa=$id_mahasiswa limit 1";
+    $id_siswa=$_SESSION["id_siswa"];
+    $sql="select * from tbl_siswa where id_siswa=$id_siswa limit 1";
     $hasil=mysqli_query($kon,$sql);
     $data = mysqli_fetch_array($hasil);
     $nama=$data['nama'];
-    $universitas=$data['universitas'];
-    $nim=$data['nim'];
+    $sekolah=$data['sekolah'];
+    $nis=$data['nis'];
     $mulai_magang=$data['mulai_magang'];
     $akhir_magang=$data['akhir_magang'];
     $foto=$data['foto'];
@@ -73,11 +73,11 @@
                     </tr>
                     <tr>
                         <td>Nomor Induk Siswa</td>
-                        <td width="80%">: <?php echo $nim; ?></td>
+                        <td width="80%">: <?php echo $nis; ?></td>
                     </tr>
                     <tr>
                         <td>Sekolah</td>
-                        <td width="80%">: <?php echo $universitas; ?></td>
+                        <td width="80%">: <?php echo $sekolah; ?></td>
                     </tr>
                     <tr>
                         <td>Tanggal</td>
@@ -102,7 +102,7 @@
                             if ($hari_sekarang == "Saturday" || $hari_sekarang == "Sunday") {
                                 echo "Hari Libur";
                             } else {
-                                $kueri = "SELECT waktu FROM tbl_absensi WHERE id_mahasiswa = '$id_mahasiswa' AND tanggal = '$tanggal_sekarang'";
+                                $kueri = "SELECT waktu FROM tbl_absensi WHERE id_siswa = '$id_siswa' AND tanggal = '$tanggal_sekarang'";
                                 $result = mysqli_query($kon, $kueri);
                             if (mysqli_num_rows($result) > 0) {
                                 $data = mysqli_fetch_assoc($result);
@@ -124,7 +124,7 @@
                             if ($hari_sekarang == "Saturday" || $hari_sekarang == "Sunday") {
                                 echo "Hari Libur";
                                 } else {
-                                    $kueri = "SELECT status FROM tbl_absensi WHERE id_mahasiswa = '$id_mahasiswa' AND tanggal = '$tanggal_sekarang'";
+                                    $kueri = "SELECT status FROM tbl_absensi WHERE id_siswa = '$id_siswa' AND tanggal = '$tanggal_sekarang'";
                                     $result = mysqli_query($kon, $kueri);
                                 if (mysqli_num_rows($result) > 0) {
                                     $data = mysqli_fetch_array($result);
@@ -147,7 +147,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <button id_mahasiswa="<?php echo $id_mahasiswa; ?>" id="tombol_absensi" class="tombol_periode mulai_absensi btn btn-success btn-circle"><i class="fa fa-clock-o"></i>  Absensi</button>
+                            <button id_siswa="<?php echo $id_siswa; ?>" id="tombol_absensi" class="tombol_periode mulai_absensi btn btn-success btn-circle"><i class="fa fa-clock-o"></i>  Absensi</button>
                         </td>
                     </tr>
                     </tbody>
@@ -194,11 +194,11 @@
 <script>
     // Setting pengguna
     $('.mulai_absensi').on('click',function(){
-        var id_mahasiswa = $(this).attr("id_mahasiswa");
+        var id_siswa = $(this).attr("id_siswa");
         $.ajax({
             url: 'apps/pengguna/mulai_absensi.php',
             method: 'post',
-            data: {id_mahasiswa:id_mahasiswa},
+            data: {id_siswa:id_siswa},
             success:function(data){
                 $('#tampil_data').html(data);  
                 document.getElementById("judul").innerHTML='Mulai Absensi';

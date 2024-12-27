@@ -13,7 +13,7 @@
             return $data;
         }
             
-        $id_mahasiswa = $_POST['id_mahasiswa'];
+        $id_siswa = $_POST['id_siswa'];
         $id_absensi = $_POST['id_absensi'];
         $id_alasan = $_POST['id_alasan'];
         $status = $_POST["status"];
@@ -22,11 +22,11 @@
         $alasan = $_POST["alasan"];
 
         if (empty($id_absensi)) {
-            $sql = "INSERT INTO tbl_absensi (id_mahasiswa, status, tanggal, waktu)
-            VALUES ('$id_mahasiswa', '$status', '$tanggal', '$waktu')";
+            $sql = "INSERT INTO tbl_absensi (id_siswa, status, tanggal, waktu)
+            VALUES ('$id_siswa', '$status', '$tanggal', '$waktu')";
         } else {
             $sql = "UPDATE tbl_absensi SET 
-            id_mahasiswa = '$id_mahasiswa', 
+            id_siswa = '$id_siswa', 
             status = '$status', 
             tanggal = '$tanggal', 
             waktu = '$waktu' 
@@ -35,11 +35,11 @@
         $simpan_absensi = mysqli_query($kon, $sql);
         
         if (empty($id_alasan)) {
-            $sql = "INSERT INTO tbl_alasan (id_mahasiswa,alasan,tanggal) 
-            VALUES ('$id_mahasiswa', '$alasan', '$tanggal')";
+            $sql = "INSERT INTO tbl_alasan (id_siswa,alasan,tanggal) 
+            VALUES ('$id_siswa', '$alasan', '$tanggal')";
         } else {
             $sql = "UPDATE tbl_alasan SET
-            id_mahasiswa = '$id_mahasiswa', 
+            id_siswa = '$id_siswa', 
             alasan = '$alasan', 
             tanggal = '$tanggal' 
             WHERE id_alasan = '$id_alasan';";
@@ -72,12 +72,12 @@
     
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $id_mahasiswa = $row['id_mahasiswa'];
+        $id_siswa = $row['id_siswa'];
         $status = $row['status'];
         $tanggal = $row['tanggal'];
         $waktu = $row['waktu'];
     } else {
-        $id_mahasiswa = "";
+        $id_siswa = "";
         $status = "";
         date_default_timezone_set("Asia/Jakarta");
         $tanggal= date("Y-m-d");
@@ -89,7 +89,7 @@
     include '../../config/database.php';
 
 
-    $query = "SELECT id_alasan, alasan FROM tbl_alasan WHERE id_mahasiswa = '$id_mahasiswa' AND tanggal = '$tanggal';";
+    $query = "SELECT id_alasan, alasan FROM tbl_alasan WHERE id_siswa = '$id_siswa' AND tanggal = '$tanggal';";
     $result = $kon->query($query);
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -108,7 +108,7 @@
         <div class="form-group">
 
                 <!-- Input untuk menyimpan id untuk proses query  -->
-                <input type="hidden" name="id_mahasiswa" value="<?php echo $_POST['id_mahasiswa']; ?>">
+                <input type="hidden" name="id_siswa" value="<?php echo $_POST['id_siswa']; ?>">
                 <input type="hidden" name="id_absensi" value="<?php echo $_POST['id_absensi']; ?>">
                 <input type="hidden" name="id_alasan" value="<?php echo $id_alasan; ?>">
                 <!-- Input untuk menyimpan id untuk proses query -->

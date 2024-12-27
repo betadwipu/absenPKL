@@ -18,14 +18,14 @@ session_start();
             //Memulai transaksi
             mysqli_query($kon,"START TRANSACTION");
 
-            //Mendapatkan kode_mahasiswa dari AJAX
-            $kode_mahasiswa=input($_POST["kode_mahasiswa"]);
+            //Mendapatkan kode_siswa dari AJAX
+            $kode_siswa=input($_POST["kode_siswa"]);
 
             //Mendapatkan input password dari form lalu di enkripsi menjadi md5
             $password=md5(input($_POST["password"]));
             
             //Query untuk update password dari tbl_user
-            $sql="UPDATE tbl_user SET password='$password' WHERE kode_pengguna='$kode_mahasiswa'";
+            $sql="UPDATE tbl_user SET password='$password' WHERE kode_pengguna='$kode_siswa'";
 
             //Menyimpan password ke tbl_user
             $password=mysqli_query($kon,$sql);
@@ -49,9 +49,9 @@ session_start();
     <div class="row">
         <div class="col-sm-7">
             <div class="form-group">
-                <!-- Menyimpan kode_mahasiswa dari AJAX -->
-                <input name="kode_mahasiswa" type="hidden" id="kode_mahasiswa" class="form-control" value="<?php echo $_POST['kode_mahasiswa'];?>"/>
-                <!-- Menyimpan kode_mahasiswa dari AJAX -->
+                <!-- Menyimpan kode_siswa dari AJAX -->
+                <input name="kode_siswa" type="hidden" id="kode_siswa" class="form-control" value="<?php echo $_POST['kode_siswa'];?>"/>
+                <!-- Menyimpan kode_siswa dari AJAX -->
             </div>
         </div>
     </div>

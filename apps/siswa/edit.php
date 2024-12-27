@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (isset($_POST['edit_mahasiswa'])) {
+if (isset($_POST['edit_siswa'])) {
     include '../../config/database.php';
 
     function input($data) {
@@ -13,11 +13,11 @@ if (isset($_POST['edit_mahasiswa'])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         mysqli_query($kon, "START TRANSACTION");
 
-        $id_mahasiswa = input($_POST["id_mahasiswa"]);
+        $id_siswa = input($_POST["id_siswa"]);
         $nama = input($_POST["nama"]);
-        $universitas = input($_POST["universitas"]);
+        $sekolah = input($_POST["sekolah"]);
         $jurusan = input($_POST["jurusan"]);
-        $nim = input($_POST["nim"]);
+        $nis = input($_POST["nis"]);
         $mulai_magang = input($_POST["mulai_magang"]);
         $akhir_magang = input($_POST["akhir_magang"]);
         $no_telp = input($_POST["no_telp"]);
@@ -38,43 +38,43 @@ if (isset($_POST['edit_mahasiswa'])) {
                 if ($foto_saat_ini != 'foto_default.png') {
                     unlink("foto/".$foto_saat_ini);
                 }
-                $sql = "UPDATE tbl_mahasiswa SET
+                $sql = "UPDATE tbl_siswa SET
                         nama='$nama',
-                        universitas='$universitas',
+                        sekolah='$sekolah',
                         jurusan='$jurusan',
-                        nim='$nim',
+                        nis='$nis',
                         mulai_magang='$mulai_magang',
                         akhir_magang='$akhir_magang',
                         no_telp='$no_telp',
                         alamat='$alamat',
                         foto='$foto_baru'
-                        WHERE id_mahasiswa=$id_mahasiswa";
+                        WHERE id_siswa=$id_siswa";
             } else {
                 mysqli_query($kon,"ROLLBACK");
-                header("Location:../../index.php?page=mahasiswa&edit=gagal&msg=Invalid file type");
+                header("Location:../../index.php?page=siswa&edit=gagal&msg=Invalid file type");
                 exit();
             }
         } else {
             // Jika tidak ada foto baru yang diupload, update data lain saja
-            $sql = "UPDATE tbl_mahasiswa SET
+            $sql = "UPDATE tbl_siswa SET
                     nama='$nama',
-                    universitas='$universitas',
+                    sekolah='$sekolah',
                     jurusan='$jurusan',
-                    nim='$nim',
+                    nis='$nis',
                     mulai_magang='$mulai_magang',
                     akhir_magang='$akhir_magang',
                     no_telp='$no_telp',
                     alamat='$alamat'
-                    WHERE id_mahasiswa=$id_mahasiswa";
+                    WHERE id_siswa=$id_siswa";
         }
 
-        $edit_mahasiswa = mysqli_query($kon, $sql);
-        if ($edit_mahasiswa) {
+        $edit_siswa = mysqli_query($kon, $sql);
+        if ($edit_siswa) {
             mysqli_query($kon, "COMMIT");
-            header("Location:../../index.php?page=mahasiswa&edit=berhasil");
+            header("Location:../../index.php?page=siswa&edit=berhasil");
         } else {
             mysqli_query($kon, "ROLLBACK");
-            header("Location:../../index.php?page=mahasiswa&edit=gagal");
+            header("Location:../../index.php?page=siswa&edit=gagal");
         }
     }
 }
@@ -83,18 +83,18 @@ if (isset($_POST['edit_mahasiswa'])) {
 
 <?php 
     include '../../config/database.php';
-    $id_mahasiswa=$_POST["id_mahasiswa"];
-    $sql="select * from tbl_mahasiswa where id_mahasiswa=$id_mahasiswa limit 1";
+    $id_siswa=$_POST["id_siswa"];
+    $sql="select * from tbl_siswa where id_siswa=$id_siswa limit 1";
     $hasil=mysqli_query($kon,$sql);
     $data = mysqli_fetch_array($hasil); 
 ?>
 
-<form action="apps/mahasiswa/edit.php" method="post" enctype="multipart/form-data">
+<form action="apps/siswa/edit.php" method="post" enctype="multipart/form-data">
     <div class="row">
         <div class="col-sm-6">
             <div class="form-group">
                 <label>Nama Lengkap :</label>
-                <input type="hidden" name="id_mahasiswa" class="form-control" value="<?php echo $data['id_mahasiswa'];?>">
+                <input type="hidden" name="id_siswa" class="form-control" value="<?php echo $data['id_siswa'];?>">
                 <input type="text" name="nama" class="form-control" value="<?php echo $data['nama'];?>" placeholder="Masukan Nama Siswa" required>
 
             </div>
@@ -102,7 +102,7 @@ if (isset($_POST['edit_mahasiswa'])) {
         <div class="col-sm-6">
             <div class="form-group">
                 <label>Sekolah :</label>
-                <input type="text" name="universitas" class="form-control" value="<?php echo $data['universitas'];?>" placeholder="Masukan Nama Sekolah" required>
+                <input type="text" name="sekolah" class="form-control" value="<?php echo $data['sekolah'];?>" placeholder="Masukan Nama Sekolah" required>
             </div>
         </div>
         <div class="col-sm-6">
@@ -114,7 +114,7 @@ if (isset($_POST['edit_mahasiswa'])) {
         <div class="col-sm-6">
             <div class="form-group">
                 <label>Nomor Induk Siswa :</label>
-                <input type="text" name="nim" class="form-control" value="<?php echo $data['nim'];?>" placeholder="Masukan Nomor Induk Siswa" required>
+                <input type="text" name="nis" class="form-control" value="<?php echo $data['nis'];?>" placeholder="Masukan Nomor Induk Siswa" required>
             </div>
         </div>
         <div class="col-sm-3">
@@ -147,7 +147,7 @@ if (isset($_POST['edit_mahasiswa'])) {
     <div class="row">
         <div class="col-sm-3">
         <label>Foto :</label><br>
-            <img src="apps/mahasiswa/foto/<?php echo $data['foto'];?>" id="preview" width="90%" class="rounded" alt="Cinque Terre">
+            <img src="apps/siswa/foto/<?php echo $data['foto'];?>" id="preview" width="90%" class="rounded" alt="Cinque Terre">
             <input type="hidden" name="foto_saat_ini" value="<?php echo $data['foto'];?>" class="form-control" />
         </div>
         <div class="col-sm-4">
@@ -166,7 +166,7 @@ if (isset($_POST['edit_mahasiswa'])) {
         <div class="col-sm-4">
             <div class="form-group">
                 <br>
-                <button type="submit" name="edit_mahasiswa" id="Submit" class="btn btn-warning" ><i class="fa fa-edit"></i> Update</button>
+                <button type="submit" name="edit_siswa" id="Submit" class="btn btn-warning" ><i class="fa fa-edit"></i> Update</button>
             </div>
         </div>
     </div>

@@ -1,6 +1,6 @@
 Login
 
-admin=admin(admin)
-betacantik=12345(mhs)
-wakit=12345(dudi)
-evi=123(pembimbing)
+admin=admin     (admin)
+betacan=12345   (siswa 1)
+wakit=123     (dudi)
+evi=123         (pembimbing)

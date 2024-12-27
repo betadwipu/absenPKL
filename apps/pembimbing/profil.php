@@ -20,7 +20,7 @@
                 include 'config/database.php';
                 //Mengambil kode_pengguna dari session
                 $kode_pengguna=$_SESSION["kode_pengguna"];
-                //Query untuk menampilkan data mahasiswa dari tbl_mahasiswa
+                //Query untuk menampilkan data pembimbing dari tbl_pembimbing
                 $sql="SELECT * FROM tbl_pembimbing WHERE kode_pembimbing='$kode_pengguna' LIMIT 1";
                 //Menyimpan hasil query
                 $hasil=mysqli_query($kon,$sql);
@@ -29,7 +29,7 @@
             ?>
 
             <?php
-                //Validasi Untuk menampilkan memberitahuan saat mahasiswa mengubah password
+                //Validasi Untuk menampilkan memberitahuan saat pembimbing mengubah password
                 if (isset($_GET['pengguna'])) {
                     if ($_GET['pengguna']=='berhasil'){
                         echo"<div class='alert alert-success'><strong>Berhasil!</strong> Ubah Password berhasil</div>";
@@ -89,7 +89,7 @@
 <!-- Modal -->
 
 <script>
-    // Setting password mahasiswa
+    // Setting password pembimbing
     $('.password').on('click',function(){
         var kode_pembimbing = $(this).attr("kode_pembimbing");
         $.ajax({

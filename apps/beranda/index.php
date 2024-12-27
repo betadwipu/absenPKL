@@ -16,8 +16,8 @@
             <!-- Menampilkan Nama Pengguna Sesuai Level -->
             <?php if ($_SESSION['level']=='Admin'):?>
                 <h3>Selamat Datang,  <?php echo  $_SESSION["nama_admin"]; ?>.</h3>
-            <?php elseif ($_SESSION['level']=='Mahasiswa'):?>
-                <h3>Selamat Datang, <?php echo  $_SESSION["nama_mahasiswa"]; ?>.</h3>
+            <?php elseif ($_SESSION['level']=='Siswa'):?>
+                <h3>Selamat Datang, <?php echo  $_SESSION["nama_siswa"]; ?>.</h3>
             <?php elseif ($_SESSION['level']=='Pembimbing'):?>
                 <h3>Selamat Datang,  <?php echo  $_SESSION["nama_pembimbing"]; ?>.</h3>
             <?php elseif ($_SESSION['level']=='Dudi'):?>

@@ -75,8 +75,8 @@ function MendapatkanHari($hari) {
 <?php
 function AbsensiOtomatis($sql) {
     include 'database.php';
-    $sql="SELECT tbl_mahasiswa.id_mahasiswa, tbl_mahasiswa.nama, tbl_mahasiswa.universitas, 
-        tbl_mahasiswa.mulai_magang, tbl_mahasiswa.akhir_magang, tbl_absensi.id_absensi, 
+    $sql="SELECT tbl_siswa.id_siswa, tbl_siswa.nama, tbl_siswa.sekolah, 
+        tbl_siswa.mulai_magang, tbl_siswa.akhir_magang, tbl_absensi.id_absensi, 
         (CASE
             WHEN tbl_absensi.status IS NULL THEN 'Belum Absensi'
             WHEN tbl_absensi.status = 1 THEN 'Hadir'
@@ -87,13 +87,13 @@ function AbsensiOtomatis($sql) {
             ELSE tbl_absensi.waktu END) AS waktu,
         DATE_FORMAT(CURDATE(), '%W') AS hari,
         DATE_FORMAT(CURDATE(), '%Y-%m-%d') AS tanggal
-        FROM tbl_mahasiswa LEFT JOIN tbl_absensi ON 
-            tbl_absensi.id_mahasiswa = tbl_mahasiswa.id_mahasiswa 
+        FROM tbl_siswa LEFT JOIN tbl_absensi ON 
+            tbl_absensi.id_siswa = tbl_siswa.id_siswa 
         AND tbl_absensi.tanggal = CURDATE() 
         WHERE DAYNAME(CURDATE()) NOT IN ('Saturday', 'Sunday') AND 
-            tbl_mahasiswa.mulai_magang <= CURDATE() AND
-            tbl_mahasiswa.akhir_magang >= CURDATE()
-            ORDER BY tbl_mahasiswa.nama ASC;";
+            tbl_siswa.mulai_magang <= CURDATE() AND
+            tbl_siswa.akhir_magang >= CURDATE()
+            ORDER BY tbl_siswa.nama ASC;";
     return $sql;
     }
 ?>
@@ -101,21 +101,21 @@ function AbsensiOtomatis($sql) {
 <?php
     function PencarianAbsensi($nama, $tanggal_awal, $tanggal_akhir){
     include 'database.php';
-    $sql="SELECT tbl_absensi.id_absensi, tbl_absensi.id_mahasiswa, 
+    $sql="SELECT tbl_absensi.id_absensi, tbl_absensi.id_siswa, 
     COALESCE(CASE tbl_absensi.status 
         WHEN 1 THEN 'Hadir' 
         WHEN 2 THEN 'Izin' 
     ELSE 'Tidak Hadir' END) as status,
     DATE_FORMAT(tbl_absensi.tanggal, '%W') AS hari, 
         tbl_absensi.tanggal, 
-        tbl_absensi.waktu, tbl_mahasiswa.nama, tbl_mahasiswa.universitas, 
-        tbl_mahasiswa.mulai_magang, tbl_mahasiswa.akhir_magang 
-    FROM tbl_mahasiswa LEFT JOIN tbl_absensi 
-        ON tbl_absensi.id_mahasiswa = tbl_mahasiswa.id_mahasiswa 
-    WHERE tbl_mahasiswa.mulai_magang <= CURDATE() AND 
-        tbl_mahasiswa.akhir_magang >= CURDATE() AND 
+        tbl_absensi.waktu, tbl_siswa.nama, tbl_siswa.sekolah, 
+        tbl_siswa.mulai_magang, tbl_siswa.akhir_magang 
+    FROM tbl_siswa LEFT JOIN tbl_absensi 
+        ON tbl_absensi.id_siswa = tbl_siswa.id_siswa 
+    WHERE tbl_siswa.mulai_magang <= CURDATE() AND 
+        tbl_siswa.akhir_magang >= CURDATE() AND 
     DAYNAME(tbl_absensi.tanggal) NOT IN ('Saturday', 'Sunday') AND 
-        tbl_mahasiswa.nama LIKE '%$nama%' AND
+        tbl_siswa.nama LIKE '%$nama%' AND
         tbl_absensi.tanggal >= '$tanggal_awal' AND
         tbl_absensi.tanggal <= '$tanggal_akhir'
     ORDER BY tbl_absensi.tanggal DESC;";
@@ -126,7 +126,7 @@ function AbsensiOtomatis($sql) {
 <?php
     function EditAbsensi($id_absensi) {
     include 'database.php';
-    $sql = "SELECT tbl_absensi.id_absensi, tbl_absensi.id_mahasiswa, 
+    $sql = "SELECT tbl_absensi.id_absensi, tbl_absensi.id_siswa, 
     tbl_absensi.status, tbl_absensi.waktu, tbl_absensi.tanggal, 
     COALESCE(tbl_alasan.tanggal, tbl_absensi.tanggal) as tanggal_alasan 
     FROM tbl_absensi LEFT JOIN tbl_alasan ON tbl_absensi.id_absensi = tbl_alasan.id_alasan 
@@ -139,13 +139,14 @@ function AbsensiOtomatis($sql) {
 <?php
 function DataKegiatan($sql) {
     include 'database.php';
-    $sql="SELECT tbl_mahasiswa.id_mahasiswa, tbl_mahasiswa.nama, 
-    tbl_mahasiswa.universitas, tbl_kegiatan.id_kegiatan, 
-    tbl_kegiatan.kegiatan, tbl_kegiatan.tanggal, 
+    $sql="SELECT tbl_siswa.id_siswa, tbl_siswa.nama, 
+    tbl_siswa.sekolah, tbl_kegiatan.id_kegiatan, 
+    tbl_kegiatan.kegiatan, tbl_kegiatan.tanggal,
+    tbl_kegiatan.foto, 
     DATE_FORMAT(tbl_kegiatan.tanggal, '%W') AS hari, 
     CONCAT(SUBSTRING(tbl_kegiatan.waktu_awal, 1, 5), ' - ', SUBSTRING(tbl_kegiatan.waktu_akhir, 1, 5)) AS waktu
-    FROM tbl_mahasiswa JOIN tbl_kegiatan ON 
-    tbl_mahasiswa.id_mahasiswa = tbl_kegiatan.id_mahasiswa 
+    FROM tbl_siswa JOIN tbl_kegiatan ON 
+    tbl_siswa.id_siswa = tbl_kegiatan.id_siswa 
     ORDER BY tbl_kegiatan.tanggal DESC";
     return $sql;
     }
@@ -154,14 +155,14 @@ function DataKegiatan($sql) {
 <?php
 function CariKegiatan($nama, $tanggal_awal, $tanggal_akhir) {
     include 'database.php';
-    $sql="SELECT tbl_mahasiswa.id_mahasiswa, tbl_mahasiswa.nama, 
-    tbl_mahasiswa.universitas, tbl_kegiatan.id_kegiatan, 
+    $sql="SELECT tbl_siswa.id_siswa, tbl_siswa.nama, 
+    tbl_siswa.sekolah, tbl_kegiatan.id_kegiatan, 
     tbl_kegiatan.kegiatan, tbl_kegiatan.tanggal, 
     DATE_FORMAT(tbl_kegiatan.tanggal, '%W') AS hari, 
     CONCAT(SUBSTRING(tbl_kegiatan.waktu_awal, 1, 5), ' - ', SUBSTRING(tbl_kegiatan.waktu_akhir, 1, 5)) AS waktu
-    FROM tbl_mahasiswa JOIN tbl_kegiatan ON 
-    tbl_mahasiswa.id_mahasiswa = tbl_kegiatan.id_mahasiswa
-    WHERE tbl_mahasiswa.nama = '$nama' AND
+    FROM tbl_siswa JOIN tbl_kegiatan ON 
+    tbl_siswa.id_siswa = tbl_kegiatan.id_siswa
+    WHERE tbl_siswa.nama = '$nama' AND
     tbl_kegiatan.tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir' 
     ORDER BY tbl_kegiatan.tanggal DESC";
     return $sql;
@@ -169,33 +170,34 @@ function CariKegiatan($nama, $tanggal_awal, $tanggal_akhir) {
 ?>
 
 <?php
-function MenampilkanKegiatan($id_mahasiswa) {
+function MenampilkanKegiatan($id_siswa) {
     include 'database.php';
-    $sql="SELECT tbl_kegiatan.id_kegiatan, tbl_kegiatan.id_mahasiswa, 
+    $sql="SELECT tbl_kegiatan.id_kegiatan, tbl_kegiatan.id_siswa, 
+    tbl_kegiatan.foto,
     DATE_FORMAT(tbl_kegiatan.tanggal, '%d-%M-%Y') AS tanggal, 
     DAYNAME(tbl_kegiatan.tanggal) AS hari, 
     GROUP_CONCAT(CONCAT(tbl_kegiatan.kegiatan, 
     ' (', tbl_kegiatan.waktu_awal, ' - ', tbl_kegiatan.waktu_akhir, ')') 
     SEPARATOR ', ') AS kegiatan 
-    FROM tbl_kegiatan WHERE tbl_kegiatan.id_mahasiswa = '$id_mahasiswa' 
-    GROUP BY tbl_kegiatan.tanggal, tbl_kegiatan.id_mahasiswa 
+    FROM tbl_kegiatan WHERE tbl_kegiatan.id_siswa = '$id_siswa' 
+    GROUP BY tbl_kegiatan.tanggal, tbl_kegiatan.id_siswa 
     ORDER BY tbl_kegiatan.tanggal DESC";
     return $sql;
 }
 ?>
 
 <?php
-function MencarikanKegiatan($id_mahasiswa, $tanggal_awal, $tanggal_akhir) {
+function MencarikanKegiatan($id_siswa, $tanggal_awal, $tanggal_akhir) {
     include 'database.php';
-    $sql="SELECT tbl_kegiatan.id_kegiatan, tbl_kegiatan.id_mahasiswa, 
+    $sql="SELECT tbl_kegiatan.id_kegiatan, tbl_kegiatan.id_siswa, 
     DATE_FORMAT(tbl_kegiatan.tanggal, '%d-%M-%Y') AS tanggal, 
     DAYNAME(tbl_kegiatan.tanggal) AS hari, 
     GROUP_CONCAT(CONCAT(tbl_kegiatan.kegiatan, 
     ' (', tbl_kegiatan.waktu_awal, ' - ', tbl_kegiatan.waktu_akhir, ')') 
     SEPARATOR ', ') AS kegiatan 
-    FROM tbl_kegiatan WHERE tbl_kegiatan.id_mahasiswa = '$id_mahasiswa'
+    FROM tbl_kegiatan WHERE tbl_kegiatan.id_siswa = '$id_siswa'
     AND tbl_kegiatan.tanggal BETWEEN '$tanggal_awal' AND '$tanggal_akhir' 
-    GROUP BY tbl_kegiatan.tanggal, tbl_kegiatan.id_mahasiswa 
+    GROUP BY tbl_kegiatan.tanggal, tbl_kegiatan.id_siswa 
     ORDER BY tbl_kegiatan.tanggal DESC";
     return $sql;
 }

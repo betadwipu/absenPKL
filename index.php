@@ -122,21 +122,21 @@ $logo = $row['logo'];
         <?php endif; ?>
         <!-- Menampilkan info nama dan level admin di navbar -->
 
-        <!-- Menampilkan info nama dan level mahasiswa di navbar -->
-        <?php if ($_SESSION['level'] == 'Mahasiswa' or $_SESSION['level'] == 'mahasiswa'): ?>
+        <!-- Menampilkan info nama dan level siswa di navbar -->
+        <?php if ($_SESSION['level'] == 'Siswa' or $_SESSION['level'] == 'siswa'): ?>
             <div class="profile-sidebar">
                 <div class="profile-userpic">
-                    <img src="apps/mahasiswa/foto/<?php echo $_SESSION['foto']; ?>" class="img-responsive" alt="">
+                    <img src="apps/siswa/foto/<?php echo $_SESSION['foto']; ?>" class="img-responsive" alt="">
                 </div>
                 <div class="profile-usertitle">
-                    <?php echo substr($_SESSION['nama_mahasiswa'], 0, 20); ?>
+                    <?php echo substr($_SESSION['nama_siswa'], 0, 20); ?>
                     <div class="profile-usertitle-name"><?php echo "Siswa"; ?></div>
                     <div></div>
                 </div>
                 <div class="clear"></div>
             </div>
         <?php endif;  ?>
-        <!-- Menampilkan info nama dan level mahasiswa di navbar -->
+        <!-- Menampilkan info nama dan level siswa di navbar -->
 
         <!-- Menampilkan info nama dan level pembimbing di navbar -->
         <?php if ($_SESSION['level'] == 'Pembimbing' or $_SESSION['level'] == 'Pembimbing'): ?>
@@ -178,27 +178,27 @@ $logo = $row['logo'];
             <!-- Menu Beranda -->
             <!-- Menu Admin -->
             <?php if ($_SESSION["level"] == "Admin" or $_SESSION['level'] == 'admin'): ?>
-                <li><a href="index.php?page=mahasiswa" id="mahasiswa"><em class="fa fa-users">&nbsp;</em> Data Siswa</a></li>
+                <li><a href="index.php?page=siswa" id="siswa"><em class="fa fa-users">&nbsp;</em> Data Siswa</a></li>
                 <li><a href="index.php?page=pembimbing" id="pembimbing"><em class="fa fa-user">&nbsp;</em> Data Pembimbing</a></li>
-                <li><a href="index.php?page=dudi" id="dudi"><em class="fa fa-user">&nbsp;</em>Data Dudi</a></li>
+                <li><a href="index.php?page=dudi" id="dudi"><em class="fa fa-user">&nbsp;</em> Data Dudi</a></li>
                 <li><a href="index.php?page=data_absensi" id="data_absensi"><em class="fa fa-calendar">&nbsp;</em> Data Absensi</a></li>
                 <li><a href="index.php?page=data_kegiatan" id="kegiatan"><em class="fa fa-book">&nbsp;</em> Data Kegiatan</a></li>
                 <li><a href="index.php?page=admin" id="admin"><em class="fa fa-user">&nbsp;</em> Administrator</a></li>
                 <li><a href="index.php?page=pengaturan" id="pengaturan"><em class="fa fa-gear">&nbsp;</em> Pengaturan</a></li>
             <?php endif; ?>
             <!-- Menu Admin -->
-            <!-- Menu Mahasiswa -->
-            <?php if ($_SESSION["level"] == "Mahasiswa" or $_SESSION["level"] == "mahasiswa"): ?>
+            <!-- Menu Siswa -->
+            <?php if ($_SESSION["level"] == "Siswa" or $_SESSION["level"] == "siswa"): ?>
                 <li><a href="index.php?page=absen"><em class="fa fa-calendar-check-o">&nbsp;</em> Absensi</a></li>
 
                 <li><a href="index.php?page=riwayat"><em class="fa fa-history">&nbsp;</em> Riwayat Absensi</a></li>
                 <li><a href="index.php?page=kegiatan"><em class="fa fa-book">&nbsp;</em> Kegiatan Harian</a></li>
                 <li><a href="index.php?page=profil"><em class="fa fa-user-circle-o">&nbsp;</em> Profil</a></li>
             <?php endif; ?>
-            <!-- Menu Mahasiswa -->
+            <!-- Menu Siswa -->
             <!-- Menu Pembimbing -->
             <?php if ($_SESSION["level"] == "Pembimbing" or $_SESSION['level'] == 'pembimbing'): ?>
-                <li><a href="index.php?page=mahasiswa" id="mahasiswa"><em class="fa fa-users">&nbsp;</em> Data Siswa</a></li>
+                <li><a href="index.php?page=siswa" id="siswa"><em class="fa fa-users">&nbsp;</em> Data Siswa</a></li>
                 <li><a href="index.php?page=data_absensi" id="data_absensi"><em class="fa fa-calendar">&nbsp;</em> Data Absensi Siswa</a></li>
                 <li><a href="index.php?page=data_kegiatan" id="kegiatan"><em class="fa fa-book">&nbsp;</em> Data Kegiatan</a></li>
                 <li><a href="index.php?page=profil-pembimbing" id="pembimbing"><em class="fa fa-user">&nbsp;</em> Profil Pembimbing</a></li>
@@ -207,7 +207,7 @@ $logo = $row['logo'];
 
             <!-- Menu Dudi -->
             <?php if ($_SESSION["level"] == "Dudi" or $_SESSION['level'] == 'dudi'): ?>
-                <li><a href="index.php?page=mahasiswa" id="mahasiswa"><em class="fa fa-users">&nbsp;</em> Data Siswa</a></li>
+                <li><a href="index.php?page=siswa" id="siswa"><em class="fa fa-users">&nbsp;</em> Data Siswa</a></li>
                 <li><a href="index.php?page=data_absensi" id="data_absensi"><em class="fa fa-calendar">&nbsp;</em> Data Absensi Siswa</a></li>
                 <li><a href="index.php?page=data_kegiatan" id="kegiatan"><em class="fa fa-book">&nbsp;</em> Data Kegiatan</a></li>
                 <li><a href="index.php?page=profil-dudi" id="dudi"><em class="fa fa-user">&nbsp;</em> Profil Dudi</a></li>
@@ -233,8 +233,8 @@ $logo = $row['logo'];
                 case 'admin':
                     include "apps/admin/index.php";
                     break;
-                case 'mahasiswa':
-                    include "apps/mahasiswa/index.php";
+                case 'siswa':
+                    include "apps/siswa/index.php";
                     break;
                 case 'pembimbing':
                     include "apps/pembimbing/index.php";

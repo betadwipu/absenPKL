@@ -20,8 +20,8 @@
                 include 'config/database.php';
                 //Mengambil kode_pengguna dari session
                 $kode_pengguna=$_SESSION["kode_pengguna"];
-                //Query untuk menampilkan data mahasiswa dari tbl_mahasiswa
-                $sql="SELECT * FROM tbl_mahasiswa WHERE kode_mahasiswa='$kode_pengguna' LIMIT 1";
+                //Query untuk menampilkan data siswa dari tbl_siswa
+                $sql="SELECT * FROM tbl_siswa WHERE kode_siswa='$kode_pengguna' LIMIT 1";
                 //Menyimpan hasil query
                 $hasil=mysqli_query($kon,$sql);
                 //Menyimpan hasil jadi array
@@ -29,7 +29,7 @@
             ?>
 
             <?php
-                //Validasi Untuk menampilkan memberitahuan saat mahasiswa mengubah password
+                //Validasi Untuk menampilkan memberitahuan saat siswa mengubah password
                 if (isset($_GET['pengguna'])) {
                     if ($_GET['pengguna']=='berhasil'){
                         echo"<div class='alert alert-success'><strong>Berhasil!</strong> Ubah Password berhasil</div>";
@@ -46,12 +46,12 @@
                             <td width="75%">: <?php echo $data['nama'];?></td>
                         </tr>
                         <tr>
-                            <td>NIM</td>
-                            <td width="75%">: <?php echo $data['nim'];?></td>
+                            <td>NIS</td>
+                            <td width="75%">: <?php echo $data['nis'];?></td>
                         </tr>
                         <tr>
-                            <td>Universitas</td>
-                            <td width="75%">: <?php echo $data['universitas'];?></td>
+                            <td>Sekolah</td>
+                            <td width="75%">: <?php echo $data['sekolah'];?></td>
                         </tr>
                         <tr>
                             <td>Jurusan</td>
@@ -75,12 +75,12 @@
                         </tr>
                         <tr>
                             <td>Foto</td>
-                            <td width="20%">: <img src="apps/mahasiswa/foto/<?php echo $data['foto']; ?>" id="preview" width="25%" class="rounded" alt="Cinque Terre"></td>
+                            <td width="20%">: <img src="apps/siswa/foto/<?php echo $data['foto']; ?>" id="preview" width="25%" class="rounded" alt="Cinque Terre"></td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="form-group">
-                <button kode_mahasiswa="<?php echo $data['kode_mahasiswa'];?>" class="password btn btn-info btn-circle" ><i class="fa fa-key"></i>Password</button>
+                <button kode_siswa="<?php echo $data['kode_siswa'];?>" class="password btn btn-info btn-circle" ><i class="fa fa-key"></i>Password</button>
                 </div>
             </div>
         </div>
@@ -113,13 +113,13 @@
 <!-- Modal -->
 
 <script>
-    // Setting password mahasiswa
+    // Setting password siswa
     $('.password').on('click',function(){
-        var kode_mahasiswa = $(this).attr("kode_mahasiswa");
+        var kode_siswa = $(this).attr("kode_siswa");
         $.ajax({
             url: 'apps/pengguna/ubah_password.php',
             method: 'post',
-            data: {kode_mahasiswa:kode_mahasiswa},
+            data: {kode_siswa:kode_siswa},
             success:function(data){
                 $('#tampil_data').html(data);  
                 document.getElementById("judul").innerHTML='Ubah Password';

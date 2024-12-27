@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if (isset($_POST['tambah_mahasiswa'])) {
+    if (isset($_POST['tambah_siswa'])) {
         
         //Include file koneksi, untuk koneksikan ke database
         include '../../config/database.php';
@@ -20,9 +20,9 @@
             mysqli_query($kon,"START TRANSACTION");
 
             $nama=input($_POST["nama"]);
-            $universitas=input($_POST["universitas"]);
+            $sekolah=input($_POST["sekolah"]);
             $jurusan=input($_POST["jurusan"]);
-            $nim=input($_POST["nim"]);
+            $nis=input($_POST["nis"]);
             $mulai_magang=input($_POST["mulai_magang"]);
             $akhir_magang=input($_POST["akhir_magang"]);
             $no_telp=input($_POST["no_telp"]);
@@ -35,51 +35,56 @@
             $file_tmp = $_FILES['foto']['tmp_name'];
 
             include '../../config/database.php';
-            $query = mysqli_query($kon, "SELECT max(id_mahasiswa) as id_terbesar FROM tbl_mahasiswa");
+            $query = mysqli_query($kon, "SELECT max(id_siswa) as id_terbesar FROM tbl_siswa");
             $ambil= mysqli_fetch_array($query);
-            $id_mahasiswa = $ambil['id_terbesar'];
-            $id_mahasiswa++;
+            $id_siswa = $ambil['id_terbesar'];
+            $id_siswa++;
             //Membuat kode admin
-            $huruf = "M";
-            $kode_mahasiswa = $huruf . sprintf("%03s", $id_mahasiswa);
+            $huruf = "S";
+            $kode_siswa = $huruf . sprintf("%03s", $id_siswa);
 
             $sql="insert into tbl_user (kode_pengguna) values
-            ('$kode_mahasiswa')";
+            ('$kode_siswa')";
 
             //Menyimpan ke tabel pengguna
             $simpan_pengguna=mysqli_query($kon,$sql);
 
             if (!empty($foto)){
                 if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
-                    //Mengupload gambar
-                    move_uploaded_file($file_tmp, 'foto/'.$foto);
-                    //Sql jika menggunakan foto
-                    $sql="insert into tbl_mahasiswa (kode_mahasiswa,nama,universitas,jurusan,nim,mulai_magang,akhir_magang,alamat,no_telp,foto) values
-                    ('$kode_mahasiswa','$nama','$universitas','$jurusan','$nim','$mulai_magang','$akhir_magang','$alamat','$no_telp','$foto')";
+                    $absenpkl = "C:/xampp/htdocs/absenpkl/img/admin/";
+                    if (!file_exists($absenpkl)) {
+                        mkdir($absenpkl, 0777, true);
+                    }
+                    $pathPhoto = "img/admin/" . $foto;
+
+                    move_uploaded_file($file_tmp, $pathPhoto);
+
+                    $sql="insert into tbl_siswa (kode_siswa,nama,sekolah,jurusan,nis,mulai_magang,akhir_magang,alamat,no_telp,foto) values
+                    ('$kode_siswa','$nama','$sekolah','$jurusan','$nis','$mulai_magang','$akhir_magang','$alamat','$no_telp','$pathPhoto')";
                 }
             }else {
                 //Sql jika tidak menggunakan foto, maka akan memakai gambar_default.png
                 $foto="foto_default.png";
-                $sql="insert into tbl_mahasiswa (kode_mahasiswa,nama,universitas,jurusan,nim,mulai_magang,akhir_magang,alamat,no_telp,foto) values
-                ('$kode_mahasiswa','$nama','$universitas','$jurusan','$nim','$mulai_magang','$akhir_magang','$alamat','$no_telp','$foto')";
+                $sql="insert into tbl_siswa (kode_siswa,nama,sekolah,jurusan,nis,mulai_magang,akhir_magang,alamat,no_telp,foto) values
+                ('$kode_siswa','$nama','$sekolah','$jurusan','$nis','$mulai_magang','$akhir_magang','$alamat','$no_telp','$foto')";
             }
 
             //Menyimpan ke tabel admin
-            $simpan_mahasiswa=mysqli_query($kon,$sql);
+            $simpan_siswa=mysqli_query($kon,$sql);
             
-            if ($simpan_pengguna and $simpan_mahasiswa) {
+            if ($simpan_pengguna and $simpan_siswa) {
                 mysqli_query($kon,"COMMIT");
-                header("Location:../../index.php?page=mahasiswa&add=berhasil");
+                header("Location:../../index.php?page=siswa&add=berhasil");
             }
             else {
                 mysqli_query($kon,"ROLLBACK");
-                header("Location:../../index.php?page=mahasiswa&add=gagal");
+                header("Location:../../index.php?page=siswa&add=gagal");
             }
         }
     }
 ?>
 
-<form action="apps/mahasiswa/tambah.php" method="post" enctype="multipart/form-data">
+<form action="apps/siswa/tambah.php" method="post" enctype="multipart/form-data">
     <div class="row">
         <div class="col-sm-6">
             <div class="form-group">
@@ -90,7 +95,7 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <label>Sekolah :</label>
-                <input type="text" name="universitas" class="form-control" placeholder="Masukan Nama Sekolah" required>
+                <input type="text" name="sekolah" class="form-control" placeholder="Masukan Nama Sekolah" required>
             </div>
         </div>
         <div class="col-sm-6">
@@ -102,7 +107,7 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <label>Nomor Induk Siswa :</label>
-                <input type="text" name="nim" class="form-control" placeholder="Masukan Nomor Induk Siswa" required>
+                <input type="text" name="nis" class="form-control" placeholder="Masukan Nomor Induk Siswa" required>
             </div>
         </div>
         <div class="col-sm-6">
@@ -156,7 +161,7 @@
     </div>
     <div class="row">
         <div class="col-sm-4">
-            <button type="submit" name="tambah_mahasiswa" id="Submit" class="btn btn-success"><i class="fa fa-plus"></i> Daftar</button>
+            <button type="submit" name="tambah_siswa" id="Submit" class="btn btn-success"><i class="fa fa-plus"></i> Daftar</button>
             <button type="reset" class="btn btn-warning"><i class="fa fa-trash"></i> Reset</button>
         </div>
     </div>

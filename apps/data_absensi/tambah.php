@@ -11,7 +11,7 @@
             return $data;
         }
 
-        $id_mahasiswa=$_POST["id_mahasiswa"];
+        $id_siswa=$_POST["id_siswa"];
         $tanggal= $_POST["tanggal"];
         $waktu = $_POST["waktu"];
         $status = $_POST["status"];
@@ -19,21 +19,21 @@
         
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        $query = "SELECT * FROM tbl_absensi WHERE id_mahasiswa = '$id_mahasiswa' AND tanggal = '$tanggal'";
+        $query = "SELECT * FROM tbl_absensi WHERE id_siswa = '$id_siswa' AND tanggal = '$tanggal'";
         $result = mysqli_query($kon, $query);
     
         if (mysqli_num_rows($result) > 0) {
         } else {
          // Menambahkan data ke tabel absensi
-        $sql = "INSERT INTO tbl_absensi (id_mahasiswa,status,waktu,tanggal) VALUES 
-            ('$id_mahasiswa',$status,'$waktu','$tanggal')";
+        $sql = "INSERT INTO tbl_absensi (id_siswa,status,waktu,tanggal) VALUES 
+            ('$id_siswa',$status,'$waktu','$tanggal')";
             $simpan_absensi=mysqli_query($kon,$sql);
         }
             
 
         if ($status == "2" AND mysqli_num_rows($result) > 0) {
-         $sql = "INSERT INTO tbl_alasan (id_mahasiswa,alasan,tanggal) VALUES 
-            ('$id_mahasiswa', '$alasan', '$tanggal')";
+         $sql = "INSERT INTO tbl_alasan (id_siswa,alasan,tanggal) VALUES 
+            ('$id_siswa', '$alasan', '$tanggal')";
             $simpan_izin=mysqli_query($kon,$sql);
         }
     
@@ -61,13 +61,13 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <label>Nama Siswa :</label>
-                <select class="form-control" id="id_mahasiswa" name="id_mahasiswa"  required>
+                <select class="form-control" id="id_siswa" name="id_siswa"  required>
                     <?php 
                         include '../../config/database.php';
-                        $query = "SELECT id_mahasiswa, nama FROM tbl_mahasiswa WHERE mulai_magang <= CURDATE() AND akhir_magang >= CURDATE();";
+                        $query = "SELECT id_siswa, nama FROM tbl_siswa WHERE mulai_magang <= CURDATE() AND akhir_magang >= CURDATE();";
                         $result = mysqli_query($kon, $query);
                         while ($data = mysqli_fetch_assoc($result)) {
-                          echo "<option value='" . $data['id_mahasiswa'] . "'>" . $data['nama'] . "</option>";
+                          echo "<option value='" . $data['id_siswa'] . "'>" . $data['nama'] . "</option>";
                         }
                     ?>
                 </select>

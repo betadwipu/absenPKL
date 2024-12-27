@@ -28,7 +28,7 @@ if ($_SESSION["level"] != 'Pembimbing' && $_SESSION["level"] != 'Admin' && $_SES
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Nama Siswa :</label>
-                                <input type="text" name="nama" id="nama" class="form-control" value="" placeholder="Cari Mahasiswa" required>
+                                <input type="text" name="nama" id="nama" class="form-control" value="" placeholder="Cari Siswa" required>
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -115,7 +115,7 @@ if ($_SESSION["level"] != 'Pembimbing' && $_SESSION["level"] != 'Admin' && $_SES
                                 <tr>
                                     <td><?php echo $no; ?></td>
                                     <td><?php echo $data['nama']; ?></td>
-                                    <td><?php echo $data['universitas']; ?></td>
+                                    <td><?php echo $data['sekolah']; ?></td>
                                     <td><?php echo $data['status']; ?></td>
                                     <td><?php echo $data['waktu']; ?></td>
                                     <td>
@@ -134,9 +134,9 @@ if ($_SESSION["level"] != 'Pembimbing' && $_SESSION["level"] != 'Admin' && $_SES
                                     </td>
                                     <td>
                                         <?php if ($_SESSION["level"] != 'Pembimbing' && $_SESSION["level"] != 'Dudi'): ?>
-                                            <button id_mahasiswa="<?php echo $data['id_mahasiswa']; ?>" id_absensi="<?php echo $data['id_absensi']; ?>" class="absensi btn btn-success btn-circle"><i class="fa fa-clock-o"></i> Absensi</button>
+                                            <button id_siswa="<?php echo $data['id_siswa']; ?>" id_absensi="<?php echo $data['id_absensi']; ?>" class="absensi btn btn-success btn-circle"><i class="fa fa-clock-o"></i> Absensi</button>
                                         <?php endif; ?>
-                                        <button id_mahasiswa="<?php echo $data['id_mahasiswa']; ?>" class="cetak btn btn-primary btn-circle"><i class="fa fa-print"></i> Cetak</button>
+                                        <button id_siswa="<?php echo $data['id_siswa']; ?>" class="cetak btn btn-primary btn-circle"><i class="fa fa-print"></i> Cetak</button>
                                     </td>
                                 </tr>
                                 <!-- bagian akhir (penutup) while -->
@@ -192,13 +192,13 @@ if ($_SESSION["level"] != 'Pembimbing' && $_SESSION["level"] != 'Admin' && $_SES
 <script>
     //Mengubah absensi oleh admin
     $('.absensi').on('click', function() {
-        var id_mahasiswa = $(this).attr("id_mahasiswa");
+        var id_siswa = $(this).attr("id_siswa");
         var id_absensi = $(this).attr("id_absensi");
         $.ajax({
             url: 'apps/data_absensi/absensi.php',
             method: 'POST',
             data: {
-                id_mahasiswa: id_mahasiswa,
+                id_siswa: id_siswa,
                 id_absensi: id_absensi
             },
             success: function(data) {
@@ -214,12 +214,12 @@ if ($_SESSION["level"] != 'Pembimbing' && $_SESSION["level"] != 'Admin' && $_SES
 <script>
     //Cetak Absensi
     $('.cetak').on('click', function() {
-        var id_mahasiswa = $(this).attr("id_mahasiswa");
+        var id_siswa = $(this).attr("id_siswa");
         $.ajax({
             url: 'apps/data_absensi/cetak.php',
             method: 'POST',
             data: {
-                id_mahasiswa: id_mahasiswa
+                id_siswa: id_siswa
             },
             success: function(data) {
                 $('#tampil_data').html(data);

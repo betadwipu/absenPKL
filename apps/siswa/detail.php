@@ -1,8 +1,8 @@
 <?php 
     include '../../config/database.php';
     include '../../config/function.php';
-    $id_mahasiswa=$_POST["id_mahasiswa"];
-    $sql="SELECT * FROM tbl_mahasiswa WHERE id_mahasiswa=$id_mahasiswa LIMIT 1";
+    $id_siswa=$_POST["id_siswa"];
+    $sql="SELECT * FROM tbl_siswa WHERE id_siswa=$id_siswa LIMIT 1";
     $hasil=mysqli_query($kon,$sql);
     $data = mysqli_fetch_array($hasil); 
 ?>
@@ -14,12 +14,12 @@
             <td width="75%">: <?php echo $data['nama'];?></td>
         </tr>
         <tr>
-            <td>Nomor Induk Siswa/td>
-            <td width="75%">: <?php echo $data['nim'];?></td>
+            <td>Nomor Induk Siswa</td>
+            <td width="75%">: <?php echo $data['nis'];?></td>
         </tr>
         <tr>
             <td>Sekolah</td>
-            <td width="75%">: <?php echo $data['universitas'];?></td>
+            <td width="75%">: <?php echo $data['sekolah'];?></td>
         </tr>
         <tr>
             <td>Jurusan</td>
