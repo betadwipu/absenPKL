@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 24 Nov 2024 pada 10.39
--- Versi server: 10.4.32-MariaDB
--- Versi PHP: 8.2.12
+-- Generation Time: Dec 27, 2024 at 02:46 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.1.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `presensiswa`
+-- Database: `absenpkl`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_absensi`
+-- Table structure for table `tbl_absensi`
 --
 
 CREATE TABLE `tbl_absensi` (
@@ -35,10 +35,20 @@ CREATE TABLE `tbl_absensi` (
   `tanggal` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbl_absensi`
+--
+
+INSERT INTO `tbl_absensi` (`id_absensi`, `id_siswa`, `status`, `waktu`, `tanggal`) VALUES
+(1, 1, 1, '12:49:19', '2024-11-25'),
+(2, 1, 1, '11:56:55', '2024-11-26'),
+(3, 1, 1, '09:57:26', '2024-11-28'),
+(4, 1, 1, '08:14:36', '2024-12-17');
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_admin`
+-- Table structure for table `tbl_admin`
 --
 
 CREATE TABLE `tbl_admin` (
@@ -50,7 +60,7 @@ CREATE TABLE `tbl_admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `tbl_admin`
+-- Dumping data for table `tbl_admin`
 --
 
 INSERT INTO `tbl_admin` (`id_admin`, `kode_admin`, `nama`, `nip`, `email`) VALUES
@@ -59,7 +69,7 @@ INSERT INTO `tbl_admin` (`id_admin`, `kode_admin`, `nama`, `nip`, `email`) VALUE
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_alasan`
+-- Table structure for table `tbl_alasan`
 --
 
 CREATE TABLE `tbl_alasan` (
@@ -72,36 +82,51 @@ CREATE TABLE `tbl_alasan` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_dudi`
+-- Table structure for table `tbl_dudi`
 --
 
 CREATE TABLE `tbl_dudi` (
   `id_dudi` int(15) NOT NULL,
   `kode_dudi` varchar(4) NOT NULL,
   `nama` varchar(255) NOT NULL,
-  `nip` int(255) NOT NULL,
+  `nip` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_dudi`
+--
+
+INSERT INTO `tbl_dudi` (`id_dudi`, `kode_dudi`, `nama`, `nip`, `email`) VALUES
+(1, 'D001', 'MUHAMMAD SHOLIHIN', '197010202001121002', 'sholihin@gmail.com');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_kegiatan`
+-- Table structure for table `tbl_kegiatan`
 --
 
 CREATE TABLE `tbl_kegiatan` (
   `id_kegiatan` int(15) NOT NULL,
   `id_siswa` int(15) DEFAULT NULL,
   `kegiatan` varchar(255) DEFAULT NULL,
+  `foto` varchar(255) DEFAULT NULL,
   `waktu_awal` time DEFAULT NULL,
   `waktu_akhir` time DEFAULT NULL,
   `tanggal` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbl_kegiatan`
+--
+
+INSERT INTO `tbl_kegiatan` (`id_kegiatan`, `id_siswa`, `kegiatan`, `foto`, `waktu_awal`, `waktu_akhir`, `tanggal`) VALUES
+(15, 1, 'qwertyuiop', 'img/admin/WhatsApp Image 2024-12-01 at 10.44.01.jpeg', '22:59:00', '23:59:00', '2024-12-31');
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_pembimbing`
+-- Table structure for table `tbl_pembimbing`
 --
 
 CREATE TABLE `tbl_pembimbing` (
@@ -112,10 +137,17 @@ CREATE TABLE `tbl_pembimbing` (
   `email` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbl_pembimbing`
+--
+
+INSERT INTO `tbl_pembimbing` (`id_pembimbing`, `kode_pembimbing`, `nama`, `nip`, `email`) VALUES
+(1, 'P001', 'EVI SUSANTI', '198810312020122010', 'evi@gmail.com');
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_setting_absensi`
+-- Table structure for table `tbl_setting_absensi`
 --
 
 CREATE TABLE `tbl_setting_absensi` (
@@ -127,7 +159,7 @@ CREATE TABLE `tbl_setting_absensi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `tbl_setting_absensi`
+-- Dumping data for table `tbl_setting_absensi`
 --
 
 INSERT INTO `tbl_setting_absensi` (`id_waktu`, `mulai_absen`, `akhir_absen`, `mulai_absen_pulang`, `akhir_absen_pulang`) VALUES
@@ -136,7 +168,7 @@ INSERT INTO `tbl_setting_absensi` (`id_waktu`, `mulai_absen`, `akhir_absen`, `mu
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_siswa`
+-- Table structure for table `tbl_siswa`
 --
 
 CREATE TABLE `tbl_siswa` (
@@ -153,10 +185,17 @@ CREATE TABLE `tbl_siswa` (
   `foto` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbl_siswa`
+--
+
+INSERT INTO `tbl_siswa` (`id_siswa`, `kode_siswa`, `nama`, `sekolah`, `jurusan`, `nis`, `mulai_magang`, `akhir_magang`, `alamat`, `no_telp`, `foto`) VALUES
+(1, 'S001', 'BETA DWI PURWANINGSIH', 'SMKN 1 MEJAYAN', 'Rekayasa Perangkat Lunak', '3502/622.063', '2024-06-01', '2024-12-31', 'Ds.Kaligunting Kec.Mejayan Kab.Madiun', '087811618859', 'person-removebg-preview.png');
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_site`
+-- Table structure for table `tbl_site`
 --
 
 CREATE TABLE `tbl_site` (
@@ -171,16 +210,16 @@ CREATE TABLE `tbl_site` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `tbl_site`
+-- Dumping data for table `tbl_site`
 --
 
 INSERT INTO `tbl_site` (`id_site`, `nama_instansi`, `pimpinan`, `pembimbing`, `no_telp`, `alamat`, `website`, `logo`) VALUES
-(1, 'Universitas Sebelas Maret', 'Hery Kurniawan, S.E. M.Si.', 'Evi susanti S.pd', '(0351) 388296', 'Jl.Imam Bonjol,Sumbersoko,Pandean,Kec.Mejayan,Kab.Madiun', 'https://uns.ac.id', 'png-transparent-sebelas-maret-university-sepuluh-nopember-institute-of-technology-universitas-sebelas-maret-uns-surakarta-diponegoro-university-others-blue-white-text-thumbnail-removebg-preview.png');
+(1, 'Universitas Sebelas Maret(UNS)', 'Prof. Dr. Eng. Ir. Herman Saputro, S.Pd., M.Pd., M.T.', 'Muhammad Sholihin,S.Ag., S.IP., M.IP', '(0351) 388296', 'Jl.Imam Bonjol,Sumbersoko,Pandean,Kec.Mejayan,Kab.Madiun', 'https://uns.ac.id', 'png-transparent-sebelas-maret-university-sepuluh-nopember-institute-of-technology-universitas-sebelas-maret-uns-surakarta-diponegoro-university-others-blue-white-text-thumbnail-removebg-preview.png');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tbl_user`
+-- Table structure for table `tbl_user`
 --
 
 CREATE TABLE `tbl_user` (
@@ -192,154 +231,157 @@ CREATE TABLE `tbl_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `tbl_user`
+-- Dumping data for table `tbl_user`
 --
 
 INSERT INTO `tbl_user` (`id_user`, `kode_pengguna`, `username`, `password`, `level`) VALUES
-(1, 'A001', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Admin');
+(1, 'A001', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Admin'),
+(4, 'S001', 'beta', '202cb962ac59075b964b07152d234b70', 'Siswa'),
+(5, 'P001', 'evi', '827ccb0eea8a706c4c34a16891f84e7b', 'Pembimbing'),
+(6, 'D001', 'sholihin', '827ccb0eea8a706c4c34a16891f84e7b', 'Dudi');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `tbl_absensi`
+-- Indexes for table `tbl_absensi`
 --
 ALTER TABLE `tbl_absensi`
   ADD PRIMARY KEY (`id_absensi`),
   ADD KEY `tbl_absensi_ibfk1_1` (`id_siswa`);
 
 --
--- Indeks untuk tabel `tbl_admin`
+-- Indexes for table `tbl_admin`
 --
 ALTER TABLE `tbl_admin`
   ADD PRIMARY KEY (`id_admin`),
   ADD KEY `kode_admin` (`kode_admin`);
 
 --
--- Indeks untuk tabel `tbl_alasan`
+-- Indexes for table `tbl_alasan`
 --
 ALTER TABLE `tbl_alasan`
   ADD PRIMARY KEY (`id_alasan`),
   ADD KEY `tbl_alasan_ibfk1_1` (`id_siswa`);
 
 --
--- Indeks untuk tabel `tbl_dudi`
+-- Indexes for table `tbl_dudi`
 --
 ALTER TABLE `tbl_dudi`
   ADD PRIMARY KEY (`id_dudi`),
   ADD KEY `kode_dudi` (`kode_dudi`);
 
 --
--- Indeks untuk tabel `tbl_kegiatan`
+-- Indexes for table `tbl_kegiatan`
 --
 ALTER TABLE `tbl_kegiatan`
   ADD PRIMARY KEY (`id_kegiatan`),
   ADD KEY `tbl_kegiatan_ibfk1_1` (`id_siswa`);
 
 --
--- Indeks untuk tabel `tbl_pembimbing`
+-- Indexes for table `tbl_pembimbing`
 --
 ALTER TABLE `tbl_pembimbing`
   ADD PRIMARY KEY (`id_pembimbing`),
   ADD KEY `kode_admin` (`kode_pembimbing`);
 
 --
--- Indeks untuk tabel `tbl_siswa`
+-- Indexes for table `tbl_siswa`
 --
 ALTER TABLE `tbl_siswa`
   ADD PRIMARY KEY (`id_siswa`),
   ADD KEY `kode_mahasiswa` (`kode_siswa`);
 
 --
--- Indeks untuk tabel `tbl_user`
+-- Indexes for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
   ADD PRIMARY KEY (`id_user`),
   ADD UNIQUE KEY `kode_pengguna` (`kode_pengguna`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_absensi`
+-- AUTO_INCREMENT for table `tbl_absensi`
 --
 ALTER TABLE `tbl_absensi`
-  MODIFY `id_absensi` int(15) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_absensi` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_admin`
+-- AUTO_INCREMENT for table `tbl_admin`
 --
 ALTER TABLE `tbl_admin`
   MODIFY `id_admin` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_alasan`
+-- AUTO_INCREMENT for table `tbl_alasan`
 --
 ALTER TABLE `tbl_alasan`
   MODIFY `id_alasan` int(15) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_dudi`
+-- AUTO_INCREMENT for table `tbl_dudi`
 --
 ALTER TABLE `tbl_dudi`
-  MODIFY `id_dudi` int(15) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_dudi` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_kegiatan`
+-- AUTO_INCREMENT for table `tbl_kegiatan`
 --
 ALTER TABLE `tbl_kegiatan`
-  MODIFY `id_kegiatan` int(15) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_kegiatan` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_pembimbing`
+-- AUTO_INCREMENT for table `tbl_pembimbing`
 --
 ALTER TABLE `tbl_pembimbing`
-  MODIFY `id_pembimbing` int(15) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pembimbing` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_siswa`
+-- AUTO_INCREMENT for table `tbl_siswa`
 --
 ALTER TABLE `tbl_siswa`
-  MODIFY `id_siswa` int(15) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_siswa` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `tbl_user`
+-- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `id_user` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_user` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `tbl_absensi`
+-- Constraints for table `tbl_absensi`
 --
 ALTER TABLE `tbl_absensi`
   ADD CONSTRAINT `tbl_absensi_ibfk_1` FOREIGN KEY (`id_siswa`) REFERENCES `tbl_siswa` (`id_siswa`);
 
 --
--- Ketidakleluasaan untuk tabel `tbl_admin`
+-- Constraints for table `tbl_admin`
 --
 ALTER TABLE `tbl_admin`
   ADD CONSTRAINT `tbl_admin_ibfk_1` FOREIGN KEY (`kode_admin`) REFERENCES `tbl_user` (`kode_pengguna`);
 
 --
--- Ketidakleluasaan untuk tabel `tbl_alasan`
+-- Constraints for table `tbl_alasan`
 --
 ALTER TABLE `tbl_alasan`
   ADD CONSTRAINT `tbl_alasan_ibfk1_1` FOREIGN KEY (`id_siswa`) REFERENCES `tbl_siswa` (`id_siswa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `tbl_kegiatan`
+-- Constraints for table `tbl_kegiatan`
 --
 ALTER TABLE `tbl_kegiatan`
   ADD CONSTRAINT `tbl_kegiatan_ibfk1_1` FOREIGN KEY (`id_siswa`) REFERENCES `tbl_siswa` (`id_siswa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `tbl_siswa`
+-- Constraints for table `tbl_siswa`
 --
 ALTER TABLE `tbl_siswa`
   ADD CONSTRAINT `tbl_siswa_ibfk_1` FOREIGN KEY (`kode_siswa`) REFERENCES `tbl_user` (`kode_pengguna`);
